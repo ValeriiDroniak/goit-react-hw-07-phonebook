@@ -30,26 +30,22 @@ export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-  const createContact = ({ name, number }) => {
-    const newName = name.toLowerCase().trim();
-    const foundName = contacts.find(
-      contact => contact.name.toLowerCase() === newName
+  const findContactByName = name =>
+    contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase().trim()
     );
 
-    if (foundName) {
-      return alert(`${name} is already in contacts`);
-    }
-
-    const newContact = {
-      name: name.trim(),
-      number: number.trim(),
-    };
-    dispatch(addContact(newContact));
-    return foundName;
-  };
+  const createContact = ({ name, number }) => ({
+    name: name.trim(),
+    number: number.trim(),
+  });
 
   const handleSubmit = (values, { resetForm }) => {
-    createContact(values);
+    if (findContactByName(values.name)) {
+      return alert(`${values.name} is already in contacts`);
+    }
+
+    dispatch(addContact(createContact(values)));
     resetForm();
   };
 
