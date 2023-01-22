@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
 import * as yup from 'yup';
